@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Strength Checker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .password-input {
+            position: relative;
+            display: inline-block;
+        }
+
+        .password-input i {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .password-input i.fa-eye-slash {
+            display: none;
+        }
+
+        .show-password .password-input i.fa-eye {
+            display: none;
+        }
+
+        .show-password .password-input i.fa-eye-slash {
+            display: block;
+        }
+
+        input[type="password"] {
+            padding: 8px;
+            width: 250px;
+            transition: width 0.3s ease;
+        }
+
+        .show-password input[type="password"] {
+            width: calc(250px - 24px);
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("password");
+            var eyeIcon = document.getElementById("eye-icon");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Password Strength Checker</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="post">
+        <label for="password">Password:</label>
+        <div class="password-input">
+            <input type="password" name="password" id="password" required>
+            <i id="eye-icon" class="fas fa-eye-slash" onclick="togglePasswordVisibility()"></i>
+        </div>
+        <br>
+        <input type="submit" value="Check Password">
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</body>
+</html>
